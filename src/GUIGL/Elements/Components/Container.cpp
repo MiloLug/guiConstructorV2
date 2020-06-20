@@ -1,5 +1,4 @@
 #include "Container.h"
-#include "ElementsStore.h"
 
 namespace GUI {
 	namespace Elements {

@@ -4,15 +4,16 @@
 
 
 namespace GUI {
+	class GLFWwindow;
 	namespace Elements {
-//base type info =========================
+		//base type info =========================
 		const std::type_info* Window::__base_type = &typeid(Window);
 		const std::type_info* Window::__current_type() {
 			return &typeid(Window);
 		}
-//attributes =========================
+		//attributes =========================
 
-//data =========================
+		//data =========================
 		inline Window* Window::parentWindow() {
 			return this;
 		}
@@ -25,7 +26,7 @@ namespace GUI {
 		inline Element* Window::parent(Element* el) {
 			return this;
 		}
-//constructor =========================
+		//constructor =========================
 		Window::Window() : ElementContainer() {
 			/*this->sysWindow = new SysWindow(100, 100, "");
 			this->sysWindow->setUserPointer(this);
@@ -37,7 +38,7 @@ namespace GUI {
 			this->sysWindow->mouseButtonCallback(Window::mouseButtonCallback);*/
 		}
 
-//some methods =========================
+		//some methods =========================
 		void Window::__drawBase(int wwidth, int wheight) {
 			/*if (!this->nativeResizing) {
 				glfwSetWindowSize(this->sysWindow->instance, this->style->_width, this->style->_height);
@@ -88,9 +89,9 @@ namespace GUI {
 
 		Window* Window::removeFromCoordList(int z, int x, int y, int w, int h, Element* elem) {
 			Window::list_coordMap_t* xList,
-				*yList,
-				*wList,
-				*hList;
+				* yList,
+				* wList,
+				* hList;
 			Window::list_elementsSet_t* eList;
 			Window::list_coordMap_t::iterator coordIter1, coordIter2, coordIter3, coordIter4, coordIter5;
 
@@ -139,12 +140,12 @@ namespace GUI {
 					this->coordList.erase(coordIter1);
 				}
 			}
-			
+
 			return this;
 		};
 
 		Window* Window::moveInCoordList(int fz, int fx, int fy, int fw, int fh,
-int tz, int tx, int ty, int tw, int th, Element* elem) {
+			int tz, int tx, int ty, int tw, int th, Element* elem) {
 
 			if (fz == tz && fx == tx && fy == ty && fw == tw && fh == th)
 				return this;
@@ -252,7 +253,7 @@ int tz, int tx, int ty, int tw, int th, Element* elem) {
 
 		void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 			/*Window* _this = (Window*)glfwGetWindowUserPointer(window);
-			Event::baseEvent* tmp = new  Event::framebufferSizeEvent(width, height);
+			Event::baseEvent* tmp = new Event::framebufferSizeEvent(width, height);
 			tmp->window = _this->id;
 			Event::emit(__EVENT_FRAMEBUFFER_SIZE, tmp);
 			Event::execAll();
@@ -312,7 +313,7 @@ int tz, int tx, int ty, int tw, int th, Element* elem) {
 			delete this;
 		}
 		Window::~Window() {
-			delete this->sysWindow;
+			//delete this->sysWindow;
 		}
 	}
 }

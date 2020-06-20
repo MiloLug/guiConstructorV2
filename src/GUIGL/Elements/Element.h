@@ -18,14 +18,14 @@ namespace GUI {
 		class Element
 		{
 		public:
-//base type info =========================
+			//base type info =========================
 			static const std::type_info* __base_type;
 			virtual const std::type_info* __current_type();
 
-//attributes =========================
+			//attributes =========================
 			bool _shown = true;
 			std::string _title = "";
-			
+
 			std::string& title(); //get
 			Element* title(const std::string& title); //set
 
@@ -42,12 +42,12 @@ namespace GUI {
 			inline virtual Element* parentWindow(Window* w);
 			inline virtual Element* parent(Element* el);
 
-//constructor =========================
+			//constructor =========================
 			Element();
 			Element(const Element& elem) = delete;
 			Element(const Element* elem) = delete;
 
-//some methods =========================
+			//some methods =========================
 			virtual void __drawBase(int wwidth, int wheight);
 
 			/*Element* windowReviewZ();
@@ -58,18 +58,18 @@ namespace GUI {
 
 			/*virtual Element* emit(const elemId_t& eventId, Event::baseEvent* e);
 			virtual Element* emit(const elemId_t& eventId, void* e = nullptr);
-	
+
 			virtual Element* on(const elemId_t& eventId, const Event::defaultELFn& fn, void* additionData, Event::defaultELFn*& listenerPtr);
 			virtual Element* on(const elemId_t& eventId, const Event::defaultELFn& fn, void* additionData);
 			virtual Element* on(const elemId_t& eventId, const Event::defaultELFn& fn, Event::defaultELFn*& listenerPtr);
 			virtual Element* on(const elemId_t& eventId, const Event::defaultELFn& fn);
-		
+
 			virtual Element* off(const elemId_t& eventId, const Event::defaultELFn& fn);
 			virtual Element* off(const elemId_t& eventId, Event::defaultELFn* fn);
 
 			virtual Element* emit(const std::string& eventId, Event::baseEvent* e);
 			virtual Element* emit(const std::string& eventId, void* e = nullptr);
-	
+
 			virtual Element* on(const std::string& eventId, const Event::defaultELFn& fn, void* additionData, Event::defaultELFn*& listenerPtr);
 			virtual Element* on(const std::string& eventId, const Event::defaultELFn& fn, void* additionData);
 			virtual Element* on(const std::string& eventId, const Event::defaultELFn& fn, Event::defaultELFn*& listenerPtr);

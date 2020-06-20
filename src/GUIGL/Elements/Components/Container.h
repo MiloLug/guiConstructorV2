@@ -3,9 +3,9 @@
 
 #define __ELEMENTS_CONTAINER
 
-#include "../common.h"
+#include "../../common.h"
 #include <vector>
-#include "Element.h"
+#include "../Element.h"
 #include <unordered_set>
 
 namespace GUI {

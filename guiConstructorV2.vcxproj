@@ -151,35 +151,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GUIGL\common.cpp" />
-    <ClCompile Include="src\GUIGL\Draw.cpp" />
-    <ClCompile Include="src\GUIGL\Elements\Button.cpp" />
-    <ClCompile Include="src\GUIGL\Elements\Container.cpp" />
+    <ClCompile Include="src\GUIGL\Elements\Components\Container.cpp" />
     <ClCompile Include="src\GUIGL\Elements\Element.cpp" />
+    <ClCompile Include="src\GUIGL\Elements\Components\Style.cpp" />
     <ClCompile Include="src\GUIGL\Elements\ElementContainer.cpp" />
-    <ClCompile Include="src\GUIGL\Elements\ElementsStore.cpp" />
-    <ClCompile Include="src\GUIGL\Elements\Style.cpp" />
     <ClCompile Include="src\GUIGL\Elements\Window.cpp" />
-    <ClCompile Include="src\GUIGL\Event.cpp" />
     <ClCompile Include="src\GUIGL\GLFW\SysWindow.cpp" />
     <ClCompile Include="src\GUIGL\GL\VAO.cpp" />
-    <ClCompile Include="src\GUIGL\guigl.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GUIGL\Draw.h" />
-    <ClInclude Include="src\GUIGL\Elements\Button.h" />
-    <ClInclude Include="src\GUIGL\Elements\Container.h" />
+    <ClInclude Include="src\GUIGL\Elements\Components\Container.h" />
     <ClInclude Include="src\GUIGL\Elements\Element.h" />
     <ClInclude Include="src\GUIGL\Elements\ElementContainer.h" />
     <ClInclude Include="src\GUIGL\Elements\Elements.h" />
-    <ClInclude Include="src\GUIGL\Elements\ElementsStore.h" />
-    <ClInclude Include="src\GUIGL\Elements\Style.h" />
+    <ClInclude Include="src\GUIGL\Elements\Components\Style.h" />
     <ClInclude Include="src\GUIGL\Elements\Window.h" />
-    <ClInclude Include="src\GUIGL\Event.h" />
-    <ClInclude Include="src\GUIGL\glall.h" />
     <ClInclude Include="src\GUIGL\GLFW\SysWindow.h" />
     <ClInclude Include="src\GUIGL\GL\VAO.h" />
-    <ClInclude Include="src\GUIGL\guigl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\GUIGL\common.h" />

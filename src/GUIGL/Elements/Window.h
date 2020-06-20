@@ -7,7 +7,7 @@
 #include <string>
 #include <functional>
 
-#include "../GLFW/SysWindow.h"
+//#include "../GLFW/SysWindow.h"
 #include "ElementContainer.h"
 #include "Element.h"
 
@@ -15,20 +15,23 @@
 #include <unordered_set>
 
 namespace GUI {
+	class GLFWwindow;//«¿√À”ÿ ¿
+
+
 	namespace Elements {
 		class Window : public ElementContainer {
 		public:
 			typedef std::unordered_set<Element*> list_elementsSet_t;
 			typedef std::map<const int, void*> list_coordMap_t;
 
-//base type info =========================
+			//base type info =========================
 			static const std::type_info* __base_type;
 			virtual const std::type_info* __current_type();
-//attributes =========================
+			//attributes =========================
 
-//data =========================
+			//data =========================
 			bool nativeResizing = false;
-			SysWindow* sysWindow = nullptr;
+			//SysWindow* sysWindow = nullptr;
 
 			list_coordMap_t coordList;
 
@@ -36,12 +39,12 @@ namespace GUI {
 			inline virtual Element* parent();
 			inline virtual Element* parentWindow(Window* w);
 			inline virtual Element* parent(Element* el);
-//constructor =========================
+			//constructor =========================
 			Window();
 			Window(const Window& win) = delete;
 			Window(const Window* win) = delete;
 
-//some methods =========================
+			//some methods =========================
 			virtual void __drawBase(int wwidth, int wheight);
 
 			virtual Window* reviewCoordList();
@@ -56,7 +59,7 @@ namespace GUI {
 			static void cursorEnterCallback(GLFWwindow* window, int entered);
 			static void closeCallback(GLFWwindow* window);
 			static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-			
+
 			virtual void removeSelf();
 			virtual ~Window();
 		};
