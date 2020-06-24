@@ -4,14 +4,14 @@
 #include <iostream>
 namespace GUI {
 	namespace Elements {
-//base type info =========================
+		//base type info =========================
 		const std::type_info* ElementContainer::__base_type = &typeid(ElementContainer);
 		const std::type_info* ElementContainer::__current_type() {
 			return &typeid(ElementContainer);
 		}
-//attributes =========================
+		//attributes =========================
 
-//data =========================
+		//data =========================
 		inline Window* ElementContainer::parentWindow() {
 			return this->_parentWindow;
 		}
@@ -24,10 +24,10 @@ namespace GUI {
 			}
 			return this;
 		}
-//constructor =========================
+		//constructor =========================
 		ElementContainer::ElementContainer() : Element(), Container() {}
 
-//some methods =========================
+		//some methods =========================
 		ElementContainer* ElementContainer::addElement(Element* elem) {
 			if (elem->parent() != nullptr) {
 				if (elem->parent() == this)

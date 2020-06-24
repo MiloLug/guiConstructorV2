@@ -5,27 +5,27 @@
 
 #include "../common.h"
 #include <functional>
-#include "Components/Container.h"
+#include "../Components/Container.h"
 #include "Element.h"
 
 namespace GUI {
 	namespace Elements {
-		class ElementContainer : public Container, public Element{
+		class ElementContainer : public Container, public Element {
 		public:
-//base type info =========================
+			//base type info =========================
 			static const std::type_info* __base_type;
 			virtual const std::type_info* __current_type();
-//attributes =========================
+			//attributes =========================
 
-//data =========================
+			//data =========================
 			inline virtual Window* parentWindow();
 			inline virtual Element* parentWindow(Window* w);
-//constructor =========================
+			//constructor =========================
 			ElementContainer();
 			ElementContainer(const ElementContainer& e) = delete;
 			ElementContainer(const ElementContainer* e) = delete;
 
-//some methods =========================	
+			//some methods =========================	
 			virtual ElementContainer* addElement(Element* elem);
 			virtual ElementContainer* removeElement(Element* elem);
 
@@ -36,7 +36,7 @@ namespace GUI {
 			virtual ElementContainer* removeAll();
 
 			virtual void __drawBase(int wwidth, int wheight);
-			
+
 			virtual void removeSelf();
 			virtual ~ElementContainer();
 		};

@@ -15,9 +15,7 @@
 #include <unordered_set>
 
 namespace GUI {
-	class GLFWwindow;//«¿√À”ÿ ¿
-
-
+	class GLFWwindow;
 	namespace Elements {
 		class Window : public ElementContainer {
 		public:

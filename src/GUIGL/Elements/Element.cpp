@@ -5,16 +5,16 @@
 #include "Window.h"
 //#include "ElementsStore.h"
 //#include "Components/Style.h"
-#include "Components/Container.h"
+#include "../Components/Container.h"
 
 namespace GUI {
 	namespace Elements {
-//base type info =========================
+		//base type info =========================
 		const std::type_info* Element::__base_type = &typeid(Element);
 		const std::type_info* Element::__current_type() {
 			return &typeid(Element);
 		}
-//attributes =========================
+		//attributes =========================
 		std::string& Element::title() {
 			return this->_title;
 		};
@@ -24,7 +24,7 @@ namespace GUI {
 			return this;
 		};
 
-//data =========================
+		//data =========================
 		inline Window* Element::parentWindow() {
 			return this->_parentWindow;
 		}
@@ -35,7 +35,7 @@ namespace GUI {
 			if (w != this->_parentWindow) {
 				if (this->_parentWindow != nullptr)
 					this->_parentWindow->removeFromCoordList(0, 0, 0, 0, 0, this);
-				
+
 				this->_parentWindow = w;
 				if (w != nullptr)
 					w->addToCoordList(0, 0, 0, 0, 0, this);
@@ -53,12 +53,12 @@ namespace GUI {
 			}
 			return this;
 		}
-//constructor =========================
+		//constructor =========================
 		Element::Element() {
-			
+
 		}
 
-//some methods =========================
+		//some methods =========================
 		void Element::__drawBase(int wwidth, int wheight) {}
 
 		//?
@@ -175,7 +175,7 @@ namespace GUI {
 			delete this;
 		}
 		Element::~Element() {
-			
+
 		}
 	}
 }

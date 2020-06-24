@@ -5,21 +5,30 @@
     <ClCompile Include="src\GUIGL\Elements\Element.cpp" />
     <ClCompile Include="src\GUIGL\Elements\Window.cpp" />
     <ClCompile Include="src\GUIGL\common.cpp" />
-    <ClCompile Include="src\GUIGL\Elements\Components\Style.cpp" />
-    <ClCompile Include="src\GUIGL\Elements\Components\Container.cpp" />
     <ClCompile Include="src\GUIGL\Elements\ElementContainer.cpp" />
     <ClCompile Include="src\GUIGL\GLFW\SysWindow.cpp" />
     <ClCompile Include="src\GUIGL\GL\VAO.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Style\StyleSet.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Style\StyleSetAspectMixer.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Style\StyleSetElement.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Style\StyleSetStateMixer.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Style\StyleStorage.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Container.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GUIGL\Elements\Element.h" />
     <ClInclude Include="src\GUIGL\Elements\Elements.h" />
     <ClInclude Include="src\GUIGL\Elements\Window.h" />
-    <ClInclude Include="src\GUIGL\Elements\Components\Style.h" />
-    <ClInclude Include="src\GUIGL\Elements\Components\Container.h" />
     <ClInclude Include="src\GUIGL\Elements\ElementContainer.h" />
     <ClInclude Include="src\GUIGL\GLFW\SysWindow.h" />
     <ClInclude Include="src\GUIGL\GL\VAO.h" />
+    <ClInclude Include="src\GUIGL\Components\Style\constants.h" />
+    <ClInclude Include="src\GUIGL\Components\Style\StyleSet.h" />
+    <ClInclude Include="src\GUIGL\Components\Style\StyleSetAspectMixer.h" />
+    <ClInclude Include="src\GUIGL\Components\Style\StyleSetElement.h" />
+    <ClInclude Include="src\GUIGL\Components\Style\StyleSetStateMixer.h" />
+    <ClInclude Include="src\GUIGL\Components\Style\StyleStorage.h" />
+    <ClInclude Include="src\GUIGL\Components\Container.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\GUIGL\common.h" />
