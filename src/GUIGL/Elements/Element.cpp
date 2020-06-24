@@ -55,7 +55,7 @@ namespace GUI {
 		}
 		//constructor =========================
 		Element::Element() {
-
+			this->style = new Style::StyleSetElement(this);
 		}
 
 		//some methods =========================
@@ -172,6 +172,7 @@ namespace GUI {
 				iter = this->containers.erase(iter);
 				tmp->unlinkElement(this);
 			}
+			delete this->style;
 			delete this;
 		}
 		Element::~Element() {

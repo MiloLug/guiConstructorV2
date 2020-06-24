@@ -12,7 +12,7 @@ namespace GUI {
 			virtual void removeSelf();
 			virtual ~StyleSetAspectMixer();
 
-			void resetAspects(StyleSetStateMixer** sets, StyleSetStateMixer** setsEnd);
+			StyleSetAspectMixer* resetAspects(StyleSetStateMixer** sets, StyleSetStateMixer** setsEnd);
 
 			StyleSetAspectMixer(StyleSetStateMixer** sets, StyleSetStateMixer** setsEnd);
 

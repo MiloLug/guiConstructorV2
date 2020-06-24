@@ -1,22 +1,22 @@
 #pragma once
-#include "constants.h"
-#include "StyleSetAspectMixer.h"
-#include "StyleStorage.h"
 #include "StyleSet.h"
-#include "../../Elements/Element.h"
 
 namespace GUI {
+	namespace Elements {
+		class Element;
+	}
 	namespace Style {
 		class StyleSetElement : public StyleSet{
 		public:
 			virtual void removeSelf();
 			virtual ~StyleSetElement();
 
-			Elements::Element* el;
+			Elements::Element* el = nullptr;
+			StyleSet *base = nullptr;
 
-			StyleSetElement(StyleSet* set, Elements::Element *el);
+			StyleSetElement(Elements::Element *el);
 
-			virtual int width(bool* interactState);
+			/*virtual int width(bool* interactState);
 			virtual int width();
 			virtual StyleSetElement* width(int t);
 
@@ -34,7 +34,7 @@ namespace GUI {
 
 			virtual int zIndex(bool* interactState);
 			virtual int zIndex();
-			virtual StyleSetElement* zIndex(int t);
+			virtual StyleSetElement* zIndex(int t);*/
 
 			StyleSetElement* setBase(StyleSet *set);
 		};

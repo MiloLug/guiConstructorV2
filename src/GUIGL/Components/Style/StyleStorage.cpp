@@ -51,6 +51,12 @@ namespace GUI {
 			StyleSetStateMixer** tmp = StylesStorage::createArray(ids);
 			return new StyleSetAspectMixer(tmp, tmp + ids.size());
 		}
+
+		StyleSetAspectMixer* StylesStorage::rebuildAspectMixer(const std::vector<HashId>& ids, StyleSetAspectMixer* mixer) {
+			StyleSetStateMixer** tmp = StylesStorage::createArray(ids);
+			return mixer->resetAspects(tmp, tmp + ids.size());
+		};
+
 		StylesStorage::list_stylesMap_t StylesStorage::styles;
 	}
 }

@@ -7,7 +7,7 @@
 #include <functional>
 #include <string>
 //#include "../Event.h"
-//#include "Style.h"
+#include "../Components/Style/StyleSetElement.h"
 #include <unordered_set>
 
 namespace GUI {
@@ -41,6 +41,8 @@ namespace GUI {
 			inline virtual Element* parent();
 			inline virtual Element* parentWindow(Window* w);
 			inline virtual Element* parent(Element* el);
+
+			Style::StyleSetElement *style;
 
 			//constructor =========================
 			Element();

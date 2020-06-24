@@ -31,6 +31,8 @@ namespace GUI {
 			static inline StyleSetStateMixer** createArray(const std::vector<HashId>& ids);
 
 			static StyleSetAspectMixer* aspectMixer(const std::vector<HashId>& ids);
+
+			static StyleSetAspectMixer* rebuildAspectMixer(const std::vector<HashId>& ids, StyleSetAspectMixer* mixer);
 		};
 	}
 }

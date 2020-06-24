@@ -10,11 +10,12 @@ namespace GUI {
 				delete[] this->sets;
 		}
 
-		void StyleSetAspectMixer::resetAspects(StyleSetStateMixer** sets, StyleSetStateMixer** setsEnd) {
+		StyleSetAspectMixer* StyleSetAspectMixer::resetAspects(StyleSetStateMixer** sets, StyleSetStateMixer** setsEnd) {
 			if (this->sets != nullptr)
 				delete[] this->sets;
 			this->sets = sets;
 			this->setsEnd = setsEnd;
+			return this;
 		}
 
 		StyleSetAspectMixer::StyleSetAspectMixer(StyleSetStateMixer** sets, StyleSetStateMixer** setsEnd) : StyleSet() {
