@@ -5,6 +5,9 @@
 #define STYLE_states_count 3
 #define STYLE_states_addCount 2
 
+#define STYLE_absolute 0
+#define STYLE_relative 1
+
 
 #define STYLE_class_props\
 	int _width = 0;\
@@ -20,4 +23,7 @@
 	bool _topSet = false;\
 	\
 	int _zIndex = 0;\
-	bool _zIndexSet = false;
+	bool _zIndexSet = false;\
+	\
+	char _position = STYLE_relative;\
+	bool _positionSet = false;

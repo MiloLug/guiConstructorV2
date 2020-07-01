@@ -21,40 +21,38 @@ namespace GUI {
 			return t;
 		}
 
-		inline StyleSetStateMixer** StylesStorage::createArray(const std::vector<HashId>& ids) {
-			StyleSetStateMixer** tmp = new StyleSetStateMixer * [ids.size()];
+		inline StyleSetStateMixer** StylesStorage::createArray(const HashId* begin, const HashId* end, const int size) {
+			StyleSetStateMixer** tmp = new StyleSetStateMixer * [size];
 			size_t tsize = 0;
-
-			std::vector<HashId>::const_reverse_iterator iter = ids.rbegin(),
-				rend = ids.rend();
-
+			
 			list_stylesMap_t::const_iterator cur,
 				stylesEnd = StylesStorage::styles.end();
 
-			for (; iter != rend; iter++) {
-				cur = StylesStorage::styles.find(iter->data);
+			do {
+				end--;
+				cur = StylesStorage::styles.find(end->data);
 				if (cur == stylesEnd) {
 					tmp[tsize] = new StyleSetStateMixer;
-					StylesStorage::styles[iter->data] = tmp[tsize];
+					StylesStorage::styles[end->data] = tmp[tsize];
 					tsize++;
 				}
 				else {
 					tmp[tsize] = cur->second;
 					tsize++;
 				}
-			}
+			} while (end != begin);
 
 			return tmp;
 		}
 
-		StyleSetAspectMixer* StylesStorage::aspectMixer(const std::vector<HashId>& ids) {
-			StyleSetStateMixer** tmp = StylesStorage::createArray(ids);
-			return new StyleSetAspectMixer(tmp, tmp + ids.size());
+		StyleSetAspectMixer* StylesStorage::aspectMixer(const HashId* begin, const HashId* end, const int size) {
+			StyleSetStateMixer** tmp = StylesStorage::createArray(begin, end, size);
+			return new StyleSetAspectMixer(tmp, tmp + size);
 		}
 
-		StyleSetAspectMixer* StylesStorage::rebuildAspectMixer(const std::vector<HashId>& ids, StyleSetAspectMixer* mixer) {
-			StyleSetStateMixer** tmp = StylesStorage::createArray(ids);
-			return mixer->resetAspects(tmp, tmp + ids.size());
+		StyleSetAspectMixer* StylesStorage::rebuildAspectMixer(StyleSetAspectMixer* mixer, const HashId* begin, const HashId* end, const int size) {
+			StyleSetStateMixer** tmp = StylesStorage::createArray(begin, end, size);
+			return mixer->resetAspects(tmp, tmp + size);
 		};
 
 		StylesStorage::list_stylesMap_t StylesStorage::styles;

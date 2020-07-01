@@ -28,11 +28,11 @@ namespace GUI {
 
 			static StyleSetStateMixer* stateMixer(HashId elementId);
 
-			static inline StyleSetStateMixer** createArray(const std::vector<HashId>& ids);
+			static inline StyleSetStateMixer** createArray(const HashId* begin, const HashId* end, const int size);
 
-			static StyleSetAspectMixer* aspectMixer(const std::vector<HashId>& ids);
+			static StyleSetAspectMixer* aspectMixer(const HashId* begin, const HashId* end, const int size);
 
-			static StyleSetAspectMixer* rebuildAspectMixer(const std::vector<HashId>& ids, StyleSetAspectMixer* mixer);
+			static StyleSetAspectMixer* rebuildAspectMixer(StyleSetAspectMixer* mixer, const HashId* begin, const HashId* end, const int size);
 		};
 	}
 }

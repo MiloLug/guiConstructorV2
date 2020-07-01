@@ -67,5 +67,14 @@ namespace GUI {
 			}
 			return this->_zIndex;
 		}
+
+		char StyleSetAspectMixer::position(bool* interactState) { //get
+			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
+				if ((*s)->positionSet(interactState)) {
+					return (*s)->position(interactState);
+				}
+			}
+			return this->_position;
+		}
 	}
 }

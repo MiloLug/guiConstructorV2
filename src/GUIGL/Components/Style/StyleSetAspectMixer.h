@@ -25,6 +25,8 @@ namespace GUI {
 			virtual int top(bool* interactState);
 
 			virtual int zIndex(bool* interactState);
+
+			virtual char position(bool* interactState);
 		};
 	}
 }

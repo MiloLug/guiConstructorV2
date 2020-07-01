@@ -53,5 +53,14 @@ namespace GUI {
 			this->_zIndexSet = true;
 			return this;
 		};
+
+		char StyleSet::position() { //get
+			return this->_position;
+		};
+		StyleSet* StyleSet::position(char t) { //set
+			this->_position = t;
+			this->_positionSet = true;
+			return this;
+		};
 	}
 }

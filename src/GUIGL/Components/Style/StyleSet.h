@@ -10,20 +10,23 @@ namespace GUI {
 
 			STYLE_class_props
 
-			virtual  int width();
+			virtual int width();
 			virtual StyleSet* width(int t);
 
-			virtual  int height();
+			virtual int height();
 			virtual StyleSet* height(int t);
 
-			virtual  int left();
+			virtual int left();
 			virtual StyleSet* left(int t);
 
-			virtual  int top();
+			virtual int top();
 			virtual StyleSet* top(int t);
 
-			virtual  int zIndex();
+			virtual int zIndex();
 			virtual StyleSet* zIndex(int t);
+
+			virtual char position();
+			virtual StyleSet* position(char t);
 		};
 	}
 }

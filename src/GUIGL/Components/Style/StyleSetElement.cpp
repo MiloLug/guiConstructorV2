@@ -18,25 +18,96 @@ namespace GUI {
 			this->el = el;
 		};
 
-		/*int StyleSetElement::width(bool* interactState) {};
-		int StyleSetElement::width() {};
-		StyleSetElement* StyleSetElement::width(int t) {};
+		int StyleSetElement::width() { //get
+			return this->_widthSet ? this->_width : this->base->width();
+		};
+		StyleSetElement* StyleSetElement::width(int t) { //set
+			this->_width = t;
+			this->_widthSet = true;
+			return this;
+		};
 
-		int StyleSetElement::height(bool* interactState) {};
-		int StyleSetElement::height() {};
-		StyleSetElement* StyleSetElement::height(int t) {};
+		int StyleSetElement::height() { //get
+			return this->_heightSet ? this->_height : this->base->height();
+		};
+		StyleSetElement* StyleSetElement::height(int t) { //set
+			this->_height = t;
+			this->_heightSet = true;
+			return this;
+		};
 
-		int StyleSetElement::left(bool* interactState) {};
-		int StyleSetElement::left() {};
-		StyleSetElement* StyleSetElement::left(int t);
+		int StyleSetElement::left() { //get
+			switch (this->position()) {
+			case STYLE_absolute:
+				return this->_leftSet ? this->_left : this->base->left();
+				break;
+			case STYLE_relative:
+				if (this->el->parent() == nullptr) {
+					return this->_leftSet ? this->_left : this->base->left();
+				}
+				else {
+					return (this->_leftSet ? this->_left : this->base->left()) + this->el->parent()->style->left();
+				}
+				break;
+			}
+		};
+		StyleSetElement* StyleSetElement::left(int t) { //set
+			this->_left = t;
+			this->_leftSet = true;
+			return this;
+		};
 
-		int StyleSetElement::top(bool* interactState) {};
-		int StyleSetElement::top() {};
-		StyleSetElement* StyleSetElement::top(int t) {};
+		int StyleSetElement::top() { //get
+			switch (this->position()) {
+			case STYLE_absolute:
+				return this->_topSet ? this->_top : this->base->top();
+				break;
+			case STYLE_relative:
+				if (this->el->parent() == nullptr) {
+					return this->_topSet ? this->_top : this->base->top();
+				}
+				else {
+					return (this->_topSet ? this->_top : this->base->top()) + this->el->parent()->style->top();
+				}
+				break;
+			}
+		};
+		StyleSetElement* StyleSetElement::top(int t) { //set
+			this->_top = t;
+			this->_topSet = true;
+			return this;
+		};
 
-		int StyleSetElement::zIndex(bool* interactState) {};
-		int StyleSetElement::zIndex() {};
-		StyleSetElement* StyleSetElement::zIndex(int t) {};*/
+		int StyleSetElement::zIndex() { //get
+			switch (this->position()) {
+			case STYLE_absolute:
+				return this->_zIndexSet ? this->_zIndex : this->base->zIndex();
+				break;
+			case STYLE_relative:
+				if (this->el->parent() == nullptr) {
+					return this->_zIndexSet ? this->_zIndex : this->base->zIndex();
+				}
+				else {
+					return 1 + (this->_zIndexSet ? this->_zIndex : this->base->zIndex()) + this->el->parent()->style->zIndex();
+				}
+				break;
+			}
+		};
+		StyleSetElement* StyleSetElement::zIndex(int t) { //set
+			this->_zIndex = t;
+			this->_zIndexSet = true;
+			return this;
+		};
+
+		char StyleSetElement::position() { //get
+			return this->_positionSet ? this->_position : this->base->position();
+		};
+		StyleSetElement* StyleSetElement::position(char t) { //set
+			this->_position = t;
+			this->_positionSet = true;
+			return this;
+		};
+
 
 		StyleSetElement* StyleSetElement::setBase(StyleSet* set) {
 			if (this->base != nullptr)

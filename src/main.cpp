@@ -6,6 +6,12 @@
 using namespace GUI;
 using namespace GUI::Elements;
 
+{
+	
+
+}
+
+
 int main() {
 	
 	Window* kek = new Window;

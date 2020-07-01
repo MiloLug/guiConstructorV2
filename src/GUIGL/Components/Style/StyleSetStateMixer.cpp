@@ -79,5 +79,20 @@ namespace GUI {
 				|| interactState[STYLE_hover - 1] && (this->sets + STYLE_hover)->_zIndexSet
 				|| this->sets->_zIndexSet;
 		}
+
+		int StyleSetStateMixer::position(bool* interactState) { //get
+			return (this->sets + (
+				interactState[STYLE_press - 1] && (this->sets + STYLE_press)->_positionSet
+				? STYLE_press
+				: interactState[STYLE_hover - 1] && (this->sets + STYLE_hover)->_positionSet
+				? STYLE_hover
+				: STYLE_plain
+				))->_position;
+		};
+		bool StyleSetStateMixer::positionSet(bool* interactState) { // get
+			return (interactState[STYLE_press - 1] && (this->sets + STYLE_press)->_positionSet)
+				|| interactState[STYLE_hover - 1] && (this->sets + STYLE_hover)->_positionSet
+				|| this->sets->_positionSet;
+		}
 	}
 }
