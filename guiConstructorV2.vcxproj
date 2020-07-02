@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUIGL\Components\ClassName.cpp" />
     <ClCompile Include="src\GUIGL\common.cpp" />
     <ClCompile Include="src\GUIGL\Components\Container.cpp" />
     <ClCompile Include="src\GUIGL\Components\Style\StyleSet.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUIGL\Components\ClassName.h" />
     <ClInclude Include="src\GUIGL\Components\Container.h" />
     <ClInclude Include="src\GUIGL\Components\Style\constants.h" />
     <ClInclude Include="src\GUIGL\Components\Style\StyleSet.h" />
