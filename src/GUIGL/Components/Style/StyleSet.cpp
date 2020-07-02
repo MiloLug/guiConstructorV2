@@ -1,6 +1,16 @@
 #include "StyleSet.h"
 #include "constants.h"
 
+#define GUIGL_STYLE_styleSetGetterSetter(_name_, _stype_) \
+StyleSet::_name_() {\
+	return this->_##_name_;\
+}\
+StyleSet* StyleSet::_name_(_stype_ t) {\
+	this->_##_name_ = t;\
+	this->_##_name_##Set = true;\
+	return this;\
+}
+
 namespace GUI {
 	namespace Style {
 		//style set
@@ -9,58 +19,11 @@ namespace GUI {
 		}
 		StyleSet::~StyleSet() {}
 
-		int StyleSet::width() { //get
-			return this->_width;
-		};
-		StyleSet* StyleSet::width(int t) { //set
-			this->_width = t;
-			this->_widthSet = true;
-			return this;
-		};
-
-		int StyleSet::height() { //get
-			return this->_height;
-		};
-		StyleSet* StyleSet::height(int t) { //set
-			this->_height = t;
-			this->_heightSet = true;
-			return this;
-		};
-
-		int StyleSet::left() { //get
-			return this->_left;
-		};
-		StyleSet* StyleSet::left(int t) { //set
-			this->_left = t;
-			this->_leftSet = true;
-			return this;
-		};
-
-		int StyleSet::top() { //get
-			return this->_top;
-		};
-		StyleSet* StyleSet::top(int t) { //set
-			this->_top = t;
-			this->_topSet = true;
-			return this;
-		};
-
-		int StyleSet::zIndex() { //get
-			return this->_zIndex;
-		};
-		StyleSet* StyleSet::zIndex(int t) { //set
-			this->_zIndex = t;
-			this->_zIndexSet = true;
-			return this;
-		};
-
-		char StyleSet::position() { //get
-			return this->_position;
-		};
-		StyleSet* StyleSet::position(char t) { //set
-			this->_position = t;
-			this->_positionSet = true;
-			return this;
-		};
+		int GUIGL_STYLE_styleSetGetterSetter(width, int)
+		int GUIGL_STYLE_styleSetGetterSetter(height, int)
+		int GUIGL_STYLE_styleSetGetterSetter(left, int)
+		int GUIGL_STYLE_styleSetGetterSetter(top, int)
+		int GUIGL_STYLE_styleSetGetterSetter(zIndex, int)
+		Parameters GUIGL_STYLE_styleSetGetterSetter(position, Parameters)
 	}
 }

@@ -31,8 +31,8 @@ namespace GUI {
 			virtual int zIndex();
 			virtual StyleSetElement* zIndex(int t);
 
-			virtual char position();
-			virtual StyleSetElement* position(char t);
+			virtual Parameters position();
+			virtual StyleSetElement* position(Parameters t);
 
 			StyleSetElement* setBase(StyleSet *set);
 		};

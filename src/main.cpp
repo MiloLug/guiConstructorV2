@@ -6,14 +6,10 @@
 using namespace GUI;
 using namespace GUI::Elements;
 
-{
-	
-
-}
 
 
 int main() {
-	
+
 	Window* kek = new Window;
 
 	kek->addElement(new Element);

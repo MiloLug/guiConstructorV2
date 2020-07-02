@@ -26,7 +26,7 @@ namespace GUI {
 
 			virtual int zIndex(bool* interactState);
 
-			virtual char position(bool* interactState);
+			virtual Parameters position(bool* interactState);
 		};
 	}
 }

@@ -38,10 +38,10 @@ namespace GUI {
 
 		int StyleSetElement::left() { //get
 			switch (this->position()) {
-			case STYLE_absolute:
+			case Parameters::absolute:
 				return this->_leftSet ? this->_left : this->base->left();
 				break;
-			case STYLE_relative:
+			case Parameters::relative:
 				if (this->el->parent() == nullptr) {
 					return this->_leftSet ? this->_left : this->base->left();
 				}
@@ -59,10 +59,10 @@ namespace GUI {
 
 		int StyleSetElement::top() { //get
 			switch (this->position()) {
-			case STYLE_absolute:
+			case Parameters::absolute:
 				return this->_topSet ? this->_top : this->base->top();
 				break;
-			case STYLE_relative:
+			case Parameters::relative:
 				if (this->el->parent() == nullptr) {
 					return this->_topSet ? this->_top : this->base->top();
 				}
@@ -80,10 +80,10 @@ namespace GUI {
 
 		int StyleSetElement::zIndex() { //get
 			switch (this->position()) {
-			case STYLE_absolute:
+			case Parameters::absolute:
 				return this->_zIndexSet ? this->_zIndex : this->base->zIndex();
 				break;
-			case STYLE_relative:
+			case Parameters::relative:
 				if (this->el->parent() == nullptr) {
 					return this->_zIndexSet ? this->_zIndex : this->base->zIndex();
 				}
@@ -99,10 +99,10 @@ namespace GUI {
 			return this;
 		};
 
-		char StyleSetElement::position() { //get
+		Parameters StyleSetElement::position() { //get
 			return this->_positionSet ? this->_position : this->base->position();
 		};
-		StyleSetElement* StyleSetElement::position(char t) { //set
+		StyleSetElement* StyleSetElement::position(Parameters t) { //set
 			this->_position = t;
 			this->_positionSet = true;
 			return this;

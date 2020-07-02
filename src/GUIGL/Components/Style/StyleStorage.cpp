@@ -1,7 +1,7 @@
 #include "StyleStorage.h"
 namespace GUI {
 	namespace Style {
-		StyleSet* StylesStorage::set(HashId elementId, short int interactState) {
+		StyleSet* StylesStorage::set(HashId elementId, States interactState) {
 			list_stylesMap_t::const_iterator cur = StylesStorage::styles.find(elementId.data);
 			if (cur != StylesStorage::styles.end()) {
 				return cur->second->sets + interactState;

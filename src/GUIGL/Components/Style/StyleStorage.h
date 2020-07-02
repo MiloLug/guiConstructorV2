@@ -24,7 +24,7 @@ namespace GUI {
 					}
 				}
 			}*/
-			static StyleSet* set(HashId elementId, short int interactState = STYLE_plain);
+			static StyleSet* set(HashId elementId, States interactState = States::plain);
 
 			static StyleSetStateMixer* stateMixer(HashId elementId);
 

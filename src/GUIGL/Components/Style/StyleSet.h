@@ -8,7 +8,24 @@ namespace GUI {
 			virtual void removeSelf();
 			virtual ~StyleSet();
 
-			STYLE_class_props
+			int _width = 0;
+			bool _widthSet = false;
+
+			int _height = 0;
+			bool _heightSet = false;
+			
+			int _left = 0;
+			bool _leftSet = false;
+			
+			int _top = 0;
+			bool _topSet = false;
+			
+			int _zIndex = 0;
+			bool _zIndexSet = false;
+
+			Parameters _position = Parameters::relative;
+			bool _positionSet = false;
+
 
 			virtual int width();
 			virtual StyleSet* width(int t);
@@ -25,8 +42,8 @@ namespace GUI {
 			virtual int zIndex();
 			virtual StyleSet* zIndex(int t);
 
-			virtual char position();
-			virtual StyleSet* position(char t);
+			virtual Parameters position();
+			virtual StyleSet* position(Parameters t);
 		};
 	}
 }

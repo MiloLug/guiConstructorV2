@@ -1,5 +1,15 @@
 #include "StyleSetAspectMixer.h"
 
+#define GUIGL_STYLE_aspectGetter(_name_) \
+StyleSetAspectMixer::_name_(bool* interactState) {\
+	for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {\
+		if ((*s)->_name_##Set(interactState)) {\
+			return (*s)->_name_(interactState);\
+		}\
+	}\
+	return this->_##_name_;\
+}
+
 namespace GUI {
 	namespace Style {
 		void StyleSetAspectMixer::removeSelf() {
@@ -23,58 +33,11 @@ namespace GUI {
 			this->setsEnd = setsEnd;
 		}
 
-		int StyleSetAspectMixer::width(bool* interactState) { //get
-			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
-				if ((*s)->widthSet(interactState)) {
-					return (*s)->width(interactState);
-				}
-			}
-			return this->_width;
-		};
-
-		int StyleSetAspectMixer::height(bool* interactState) { //get
-			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
-				if ((*s)->heightSet(interactState)) {
-					return (*s)->height(interactState);
-				}
-			}
-			return this->_height;
-		};
-
-		int StyleSetAspectMixer::left(bool* interactState) { //get
-			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
-				if ((*s)->leftSet(interactState)) {
-					return (*s)->left(interactState);
-				}
-			}
-			return this->_left;
-		};
-
-		int StyleSetAspectMixer::top(bool* interactState) { //get
-			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
-				if ((*s)->topSet(interactState)) {
-					return (*s)->top(interactState);
-				}
-			}
-			return this->_top;
-		};
-
-		int StyleSetAspectMixer::zIndex(bool* interactState) { //get
-			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
-				if ((*s)->zIndexSet(interactState)) {
-					return (*s)->zIndex(interactState);
-				}
-			}
-			return this->_zIndex;
-		}
-
-		char StyleSetAspectMixer::position(bool* interactState) { //get
-			for (StyleSetStateMixer** s = this->sets; s != this->setsEnd; s++) {
-				if ((*s)->positionSet(interactState)) {
-					return (*s)->position(interactState);
-				}
-			}
-			return this->_position;
-		}
+		int GUIGL_STYLE_aspectGetter(width)
+		int GUIGL_STYLE_aspectGetter(height)
+		int GUIGL_STYLE_aspectGetter(left)
+		int GUIGL_STYLE_aspectGetter(top)
+		int GUIGL_STYLE_aspectGetter(zIndex)
+		Parameters GUIGL_STYLE_aspectGetter(position)
 	}
 }
