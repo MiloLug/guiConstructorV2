@@ -40,7 +40,14 @@ int main() {
 	elem->className->push("lol");
 	elem->className->push("ggwp");
 
-
+	while (1) {
+		string exq = "";
+		cin >> exq;
+		if (exq == "exit") {
+			Event::terminate();
+			break;
+		}
+	}
 
 	Event::wait();
 	return 0;
