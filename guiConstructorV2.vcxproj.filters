@@ -14,7 +14,10 @@
     <ClCompile Include="src\GUIGL\Components\Style\StyleSetStateMixer.cpp" />
     <ClCompile Include="src\GUIGL\Components\Style\StyleStorage.cpp" />
     <ClCompile Include="src\GUIGL\Components\Container.cpp" />
-    <ClCompile Include="src\GUIGL\Components\ClassName.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Event\Emitter.cpp" />
+    <ClCompile Include="src\GUIGL\Components\Event\ThreadLoops.cpp" />
+    <ClCompile Include="src\GUIGL\Components\ClassName\ClassName.cpp" />
+    <ClCompile Include="src\GUIGL\Components\EventCollection\classNameChange.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GUIGL\Elements\Element.h" />
@@ -30,7 +33,11 @@
     <ClInclude Include="src\GUIGL\Components\Style\StyleSetStateMixer.h" />
     <ClInclude Include="src\GUIGL\Components\Style\StyleStorage.h" />
     <ClInclude Include="src\GUIGL\Components\Container.h" />
-    <ClInclude Include="src\GUIGL\Components\ClassName.h" />
+    <ClInclude Include="src\GUIGL\Components\Event\DataPack.h" />
+    <ClInclude Include="src\GUIGL\Components\Event\Emitter.h" />
+    <ClInclude Include="src\GUIGL\Components\Event\ThreadLoops.h" />
+    <ClInclude Include="src\GUIGL\Components\ClassName\ClassName.h" />
+    <ClInclude Include="src\GUIGL\Components\EventCollection\classNameChange.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\GUIGL\common.h" />

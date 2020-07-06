@@ -1,16 +1,16 @@
 #include "common.h"
 
 #include <functional>
-#include <xxhash.h>
+#include "Components/xxhash.hpp"
 #include <cstring>
 #include <string>
 
 namespace GUI {
 	inline elemIdNum_t HashId::hashString(std::string& data) {
-		return (elemIdNum_t)XXH64(data.data(), data.length(), 0);
+		return (elemIdNum_t)xxh::xxhash3<64>(data.data(), data.length(), 0);
 	}
 	inline elemIdNum_t HashId::hashString(const char* data) {
-		return (elemIdNum_t)XXH64(data, strlen(data), 0);
+		return (elemIdNum_t)xxh::xxhash3<64>(data, strlen(data), 0);
 	}
 
 	HashId::HashId(elemIdNum_t data) {
@@ -44,6 +44,9 @@ namespace GUI {
 		return a == this->data;
 	}
 	bool HashId::operator == (HashId& a) {
+		return a.data == this->data;
+	}
+	bool HashId::operator == (const HashId& a) {
 		return a.data == this->data;
 	}
 

@@ -56,6 +56,7 @@ namespace GUI {
 		//constructor =========================
 		Element::Element() {
 			this->style = new Style::StyleSetElement(this);
+			this->className = new ClassName::NameContainer(this);
 		}
 
 		//some methods =========================
@@ -173,6 +174,8 @@ namespace GUI {
 				tmp->unlinkElement(this);
 			}
 			delete this->style;
+			delete this->className;
+
 			delete this;
 		}
 		Element::~Element() {

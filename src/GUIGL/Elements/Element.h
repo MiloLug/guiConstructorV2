@@ -6,16 +6,17 @@
 #include "../common.h"
 #include <functional>
 #include <string>
-//#include "../Event.h"
+#include "../Components/Event/Emitter.h"
 #include "../Components/Style/StyleSetElement.h"
 #include <unordered_set>
+#include "../Components/ClassName/ClassName.h"
 
 namespace GUI {
 	class Container;
 	namespace Elements {
 		class Window;
 
-		class Element
+		class Element : public Event::Emitter
 		{
 		public:
 			//base type info =========================
@@ -28,6 +29,9 @@ namespace GUI {
 
 			std::string& title(); //get
 			Element* title(const std::string& title); //set
+
+			ClassName::NameContainer* className;
+
 
 			//elemId_t id = 0; //todo
 			//elemId_t className = 0; //todo
