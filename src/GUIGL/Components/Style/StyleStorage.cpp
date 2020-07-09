@@ -1,7 +1,10 @@
 #include "StyleStorage.h"
 namespace GUI {
 	namespace Style {
+		std::mutex StylesStorage::m;
+
 		StyleSet* StylesStorage::set(HashId elementId, States interactState) {
+			std::lock_guard<std::mutex> g(StylesStorage::m);
 			list_stylesMap_t::const_iterator cur = StylesStorage::styles.find(elementId.data);
 			if (cur != StylesStorage::styles.end()) {
 				return cur->second->sets + interactState;
@@ -12,6 +15,7 @@ namespace GUI {
 		};
 
 		StyleSetStateMixer* StylesStorage::stateMixer(HashId elementId) {
+			std::lock_guard<std::mutex> g(StylesStorage::m);
 			list_stylesMap_t::const_iterator cur = StylesStorage::styles.find(elementId.data);
 			if (cur != StylesStorage::styles.end()) {
 				return cur->second;
@@ -46,11 +50,13 @@ namespace GUI {
 		}
 
 		StyleSetAspectMixer* StylesStorage::aspectMixer(const HashId* begin, const HashId* end, const int size) {
+			std::lock_guard<std::mutex> g(StylesStorage::m);
 			StyleSetStateMixer** tmp = StylesStorage::createArray(begin, end, size);
 			return new StyleSetAspectMixer(tmp, tmp + size);
 		}
 
 		StyleSetAspectMixer* StylesStorage::rebuildAspectMixer(StyleSetAspectMixer* mixer, const HashId* begin, const HashId* end, const int size) {
+			std::lock_guard<std::mutex> g(StylesStorage::m);
 			StyleSetStateMixer** tmp = StylesStorage::createArray(begin, end, size);
 			return mixer->resetAspects(tmp, tmp + size);
 		};

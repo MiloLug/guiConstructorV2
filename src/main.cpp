@@ -5,6 +5,7 @@
 #include "GUIGL/Components/Event/Emitter.h"
 #include "GUIGL/Components/EventCollection/classNameChange.h"
 #include <mutex>
+#include <GUIGL/Components/Style/StyleStorage.h>
 
 using namespace GUI;
 using namespace GUI::Elements;
@@ -16,6 +17,13 @@ int main() {
 
 	Event::init(8);
 
+	Style::StylesStorage::set("gg", GUI::Style::States::plain)
+		->height(20)
+		->width(30);
+	Style::StylesStorage::set("kek", GUI::Style::States::plain)
+		->height(40)
+		->left(10);
+
 
 	Window* kek = new Window;
 
@@ -23,7 +31,7 @@ int main() {
 
 	kek->addElement(elem);
 
-	elem->on("classNameChange", [](Event::DataPack* data) {
+	/*elem->on("classNameChange", [](Event::DataPack* data) {
 		Event::EventCollection::classNameChange* ev = (Event::EventCollection::classNameChange*)data;
 		string joined = "";
 
@@ -33,12 +41,24 @@ int main() {
 		m.lock();
 		cout << joined << endl;
 		m.unlock();
-	});
+	});*/
 
-	elem->className->push("gg");
-	elem->className->push("kek");
-	elem->className->push("lol");
-	elem->className->push("ggwp");
+	elem->className->add("gg");
+
+	std::cout << "width: " << elem->style->width() << std::endl;
+	std::cout << "height: " << elem->style->height() << std::endl;
+	std::cout << "left: " << elem->style->left() << std::endl;
+	std::cout << "======================" << std::endl;
+
+	elem->className->add("kek");
+
+	std::cout << "width: " << elem->style->width() << std::endl;
+	std::cout << "height: " << elem->style->height() << std::endl;
+	std::cout << "left: " << elem->style->left() << std::endl;
+	std::cout << "======================" << std::endl;
+
+	elem->className->add("lol");
+	elem->className->add("ggwp");
 
 	while (1) {
 		string exq = "";

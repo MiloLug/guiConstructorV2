@@ -32,9 +32,7 @@ namespace GUI {
 
 			ClassName::NameContainer* className;
 
-
 			//elemId_t id = 0; //todo
-			//elemId_t className = 0; //todo
 
 //data =========================
 			std::unordered_set<Container*> containers;

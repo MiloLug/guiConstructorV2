@@ -22,10 +22,10 @@ namespace GUI {
 			void addName(const HashId& name);
 
 			NameContainer(Elements::Element* el);
-			inline void push(const std::string& name) {
+			inline void add(const std::string& name) {
 				this->addName(name);
 			}
-			inline void push(const char* name) {
+			inline void add(const char* name) {
 				this->addName(name);
 			}
 		};

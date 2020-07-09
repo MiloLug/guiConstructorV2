@@ -1,18 +1,24 @@
 #pragma once
 #include "StyleSet.h"
+#include "../../common.h"
+#include <mutex>
 
 namespace GUI {
 	namespace Elements {
 		class Element;
 	}
 	namespace Style {
+		class StyleSetAspectMixer;
 		class StyleSetElement : public StyleSet{
 		public:
+			std::recursive_mutex m;
+
 			virtual void removeSelf();
 			virtual ~StyleSetElement();
 
 			Elements::Element* el = nullptr;
-			StyleSet *base = nullptr;
+			StyleSetAspectMixer *base = nullptr;
+			bool stateMap[States::mapSize] = { false };
 
 			StyleSetElement(Elements::Element *el);
 
@@ -34,7 +40,12 @@ namespace GUI {
 			virtual Parameters position();
 			virtual StyleSetElement* position(Parameters t);
 
-			StyleSetElement* setBase(StyleSet *set);
+			StyleSetElement* setBase(StyleSetAspectMixer *set);
+
+			StyleSetElement* mixAspects(const HashId* begin, const HashId* end, const int size);
+
+			inline StyleSetElement* hover(bool state);
+			inline StyleSetElement* press(bool state);
 		};
 	}
 }

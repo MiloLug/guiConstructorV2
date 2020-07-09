@@ -5,11 +5,13 @@
 #include "StyleSetStateMixer.h"
 #include "StyleSetAspectMixer.h"
 #include "constants.h"
+#include <mutex>
 
 namespace GUI {
 	namespace Style {
 		class StylesStorage {
 		public:
+			static std::mutex m;
 			typedef std::unordered_map<GUI::elemIdNum_t, StyleSetStateMixer*> list_stylesMap_t;
 			static list_stylesMap_t styles;
 			/*static  void setStyleSetFields(StyleSet *set, std::unordered_map<int, int> *fields) {
