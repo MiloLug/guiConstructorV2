@@ -1,12 +1,8 @@
 #pragma once
-#ifndef __GLFW_SYSWINDOW
-
-#define __GLFW_SYSWINDOW
-
 #include <stdexcept>
-#include <GLFW/glfw3.h>
 #include <string>
 
+struct GLFWwindow;
 namespace GUI {
 	class SysWindow
 	{
@@ -14,7 +10,6 @@ namespace GUI {
 		GLFWwindow* instance;
 		SysWindow(int width, int height, std::string title);
 		SysWindow(const SysWindow& copy) = delete;
-		//setFullscreen(GLFWmonitor *monitor);
 		void makeContextCurrent();
 		void swapBuffers();
 		void setUserPointer(void* point);
@@ -29,5 +24,3 @@ namespace GUI {
 		~SysWindow();
 	};
 }
-
-#endif

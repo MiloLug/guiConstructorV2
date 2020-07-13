@@ -1,8 +1,4 @@
 #pragma once
-#ifndef __ELEMENTS_ELEMENTCONTAINER
-
-#define __ELEMENTS_ELEMENTCONTAINER
-
 #include "../common.h"
 #include <functional>
 #include "../Components/Container.h"
@@ -12,6 +8,7 @@ namespace GUI {
 	namespace Elements {
 		class ElementContainer : public Container, public Element {
 		public:
+			//std::mutex m;
 			//base type info =========================
 			static const std::type_info* __base_type;
 			virtual const std::type_info* __current_type();
@@ -20,6 +17,9 @@ namespace GUI {
 			//data =========================
 			inline virtual Window* parentWindow();
 			inline virtual Element* parentWindow(Window* w);
+			inline virtual Element* parentWindowForceMove(Window* w);
+			inline virtual Element* parent();
+			inline virtual Element* parent(Element* w);
 			//constructor =========================
 			ElementContainer();
 			ElementContainer(const ElementContainer& e) = delete;
@@ -37,10 +37,18 @@ namespace GUI {
 
 			virtual void __drawBase(int wwidth, int wheight);
 
+
+			inline virtual Element* __updateLeft();
+
+			inline virtual Element* __updateTop();
+
+			inline virtual Element* __updateZ();
+
+			inline virtual Element* __updatePos();
+
+
 			virtual void removeSelf();
 			virtual ~ElementContainer();
 		};
 	}
 }
-
-#endif

@@ -62,5 +62,15 @@ namespace GUI {
 		};
 
 		StylesStorage::list_stylesMap_t StylesStorage::styles;
+
+		void StylesStorage::terminate() {
+			std::lock_guard<std::mutex> g(StylesStorage::m);
+			list_stylesMap_t::const_iterator cur = StylesStorage::styles.begin(),
+				end = StylesStorage::styles.end();
+			for (; cur != end; cur++) {
+				delete cur->second;
+			}
+			StylesStorage::styles.clear();
+		}
 	}
 }

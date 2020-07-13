@@ -1,4 +1,5 @@
 #include "SysWindow.h"
+#include <GLFW/glfw3.h>
 
 namespace GUI {
 	SysWindow::SysWindow(int width, int height, std::string title) {

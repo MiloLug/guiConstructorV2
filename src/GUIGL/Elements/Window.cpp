@@ -1,10 +1,13 @@
 #include "Window.h"
-//#include "../Draw.h"
-//#include "../Event.h"
-
+#include "Element.h"
+#include <GLFW/glfw3.h>
+#include "../Components/EventCollection/mouseMove.h"
+#include "../Components/EventCollection/mouseDown.h"
+#include "../Components/EventCollection/mouseUp.h"
+#include "../Components/WindowWaiter.h"
+#include "../Components/CoordMap.h"
 
 namespace GUI {
-	class GLFWwindow;
 	namespace Elements {
 		//base type info =========================
 		const std::type_info* Window::__base_type = &typeid(Window);
@@ -27,15 +30,15 @@ namespace GUI {
 			return this;
 		}
 		//constructor =========================
-		Window::Window() : ElementContainer() {
-			/*this->sysWindow = new SysWindow(100, 100, "");
-			this->sysWindow->setUserPointer(this);
-
-			this->sysWindow->framebufferSizeCallback(Window::framebufferSizeCallback);
-			this->sysWindow->cursorPosCallback(Window::cursorPosCallback);
-			this->sysWindow->cursorEnterCallback(Window::cursorEnterCallback);
-			this->sysWindow->closeCallback(Window::closeCallback);
-			this->sysWindow->mouseButtonCallback(Window::mouseButtonCallback);*/
+		Window::Window(int width, int height, const std::string& title) : ElementContainer(), SysWindow(width, height, title) {
+			this->coordMap = new CoordMap;
+			WindowWaiter::addWindow(this);
+			this->setUserPointer(this);
+			//this->framebufferSizeCallback(Window::framebufferSizeCallback);
+			this->cursorPosCallback(Window::cursorPosCallbackFn);
+			//this->cursorEnterCallback(Window::cursorEnterCallback);
+			this->closeCallback(Window::closeCallbackFn);
+			this->mouseButtonCallback(Window::mouseButtonCallbackFn);
 		}
 
 		//some methods =========================
@@ -51,49 +54,17 @@ namespace GUI {
 		}
 
 
-		Window* Window::reviewCoordList() {
+		
 
-			return this;
-		};
-		Window* Window::addToCoordList(int z, int x, int y, int w, int h, Element* elem) {
-			std::pair<Window::list_coordMap_t::iterator, bool> tmp = this->coordList.emplace(z, nullptr);
-
-			if (tmp.second) {
-				tmp.first->second = new Window::list_coordMap_t;
-			}
-
-			tmp = ((Window::list_coordMap_t*)tmp.first->second)->emplace(x, nullptr);
-			if (tmp.second) {
-				tmp.first->second = new Window::list_coordMap_t;
-			}
-
-			tmp = ((Window::list_coordMap_t*)tmp.first->second)->emplace(y, nullptr);
-			if (tmp.second) {
-				tmp.first->second = new Window::list_coordMap_t;
-			}
-
-			tmp = ((Window::list_coordMap_t*)tmp.first->second)->emplace(w, nullptr);
-			if (tmp.second) {
-				tmp.first->second = new Window::list_coordMap_t;
-			}
-
-			tmp = ((Window::list_coordMap_t*)tmp.first->second)->emplace(h, nullptr);
-			if (tmp.second) {
-				tmp.first->second = new Window::list_elementsSet_t;
-			}
-
-			((Window::list_elementsSet_t*)tmp.first->second)->insert(elem);
-
-			return this;
-		};
-
-		Window* Window::removeFromCoordList(int z, int x, int y, int w, int h, Element* elem) {
+		/*Window* Window::removeFromCoordList(int z, int x, int y, int w, int h, Element* elem) {
 			Window::list_coordMap_t* xList,
 				* yList,
 				* wList,
 				* hList;
 			Window::list_elementsSet_t* eList;
 			Window::list_coordMap_t::iterator coordIter1, coordIter2, coordIter3, coordIter4, coordIter5;
+
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
 
 			coordIter1 = this->coordList.find(z);
 			if (coordIter1 != this->coordList.end()) {
@@ -142,9 +113,10 @@ namespace GUI {
 			}
 
 			return this;
-		};
+		};*/
+		
 
-		Window* Window::moveInCoordList(int fz, int fx, int fy, int fw, int fh,
+		/*Window* Window::moveInCoordList(int fz, int fx, int fy, int fw, int fh,
 			int tz, int tx, int ty, int tw, int th, Element* elem) {
 
 			if (fz == tz && fx == tx && fy == ty && fw == tw && fh == th)
@@ -156,6 +128,8 @@ namespace GUI {
 				* hList;
 			Window::list_elementsSet_t* eList;
 			Window::list_coordMap_t::iterator coordIter1, coordIter2, coordIter3, coordIter4, coordIter5;
+
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
 
 			coordIter1 = this->coordList.find(fz);
 			if (coordIter1 != this->coordList.end()) {
@@ -206,50 +180,9 @@ namespace GUI {
 			this->addToCoordList(tz, tx, ty, tw, th, elem);
 
 			return this;
-		};
+		};*/
 
-		Element* Window::findInCoordList(int x, int y) {
-			Window::list_coordMap_t* xList,
-				* yList,
-				* wList,
-				* hList;
-			list_coordMap_t::reverse_iterator itZ, itX, itY, itW, itH,
-				endZ, endX, endY, endW, endH;
-			Window::list_elementsSet_t* eList;
-
-			int tmpw, tmph;
-
-			endZ = this->coordList.rend();
-			for (itZ = this->coordList.rbegin(); itZ != endZ; ++itZ) {
-				xList = (list_coordMap_t*)itZ->second;
-				endX = xList->rend();
-				for (itX = xList->rbegin(); itX != endX; ++itX) {
-					if (itX->first > x)
-						continue;
-					tmpw = x - itX->first;
-					yList = (list_coordMap_t*)itX->second;
-					endY = yList->rend();
-					for (itY = yList->rbegin(); itY != endY; ++itY) {
-						if (itY->first > y)
-							continue;
-						tmph = y - itY->first;
-						wList = (list_coordMap_t*)itY->second;
-						endW = wList->rend();
-						for (itW = wList->rbegin(); itW != endW && !(itW->first < tmpw); ++itW) {
-							hList = (list_coordMap_t*)itW->second;
-							endH = hList->rend();
-							for (itH = hList->rbegin(); itH != endH && !(itH->first < tmph); ++itH) {
-								eList = (list_elementsSet_t*)itH->second;
-								if (!eList->empty()) {
-									return *eList->begin();
-								}
-							}
-						}
-					}
-				}
-			}
-			return nullptr;
-		};
+		
 
 		void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 			/*Window* _this = (Window*)glfwGetWindowUserPointer(window);
@@ -265,16 +198,18 @@ namespace GUI {
 
 			Draw::draw();*/
 		}
-		void Window::cursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
-			/*Window* _this = (Window*)glfwGetWindowUserPointer(window);
-			Event::baseEvent* tmp = new Event::mouseMoveEvent(xpos, ypos);
-			tmp->window = _this->id;
-			tmp->eventId = EVENT_MOUSE_MOVE;
-			Event::emit(__EVENT_MOUSE_MOVE, tmp);*/
+		void Window::cursorPosCallbackFn(GLFWwindow* window, double xpos, double ypos) {
+			Window* _this = (Window*)glfwGetWindowUserPointer(window);
+			Element* top = _this->coordMap->find(xpos, ypos);
+			(top == nullptr ? _this : top)->emit(
+				Event::EventCollection::mouseMove::eventId,
+				new Event::EventCollection::mouseMove(xpos, ypos)
+			);
 		}
-		void Window::closeCallback(GLFWwindow* window) {
-			/*Window* _this = (Window*)glfwGetWindowUserPointer(window);
-			Event::baseEvent* tmp = new Event::closeEvent();
+		void Window::closeCallbackFn(GLFWwindow* window) {
+			Window* _this = (Window*)glfwGetWindowUserPointer(window);
+			_this->removeSelf();
+			/*Event::baseEvent* tmp = new Event::closeEvent();
 			tmp->window = _this->id;
 			Event::emit(__EVENT_CLOSE, tmp);*/
 		}
@@ -292,27 +227,66 @@ namespace GUI {
 				Event::emit(__EVENT_WINDOW_MOUSE_LEAVE, tmp);
 			}*/
 		};
-		void Window::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-			/*Window* _this = (Window*)glfwGetWindowUserPointer(window);
+		void Window::mouseButtonCallbackFn(GLFWwindow* window, int button, int action, int mods) {
+			Window* _this = (Window*)glfwGetWindowUserPointer(window);
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
 
-			Event::mouseButtonEvent* tmp = new Event::mouseButtonEvent(xpos,ypos, button);
-			tmp->window = _this->id;
+			Element* top = _this->coordMap->find(xpos, ypos);
 
 			if (action == GLFW_PRESS)
-				tmp->eventId = EVENT_MOUSE_DOWN;
+				(top == nullptr ? _this : top)->emit(
+					Event::EventCollection::mouseDown::eventId,
+					new Event::EventCollection::mouseDown(xpos, ypos, (Event::EventCollection::MouseButtons)button)
+				);
 			else
-				tmp->eventId = EVENT_MOUSE_UP;
-
-			Event::emit(__EVENT_MOUSE_MOVE, tmp);*/
+				(top == nullptr ? _this : top)->emit(
+					Event::EventCollection::mouseUp::eventId,
+					new Event::EventCollection::mouseUp(xpos, ypos, (Event::EventCollection::MouseButtons)button)
+				);
 		}
+
+
+		inline Window* Window::__updateHeight(){
+			glfwSetWindowSize(this->instance, this->style->width(), this->style->height());
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
+			return this;
+		};
+
+		inline Window* Window::__updateWidth() {
+			glfwSetWindowSize(this->instance, this->style->width(), this->style->height());
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
+			return this;
+		};
+
+		inline Window* Window::__updateLeft() {
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
+			return this;
+		};
+
+		inline Window* Window::__updateTop() {
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
+			return this;
+		};
+
+		inline Window* Window::__updateZ() {
+			return this;
+		};
+
+		inline Window* Window::__updatePos() {
+			glfwSetWindowSize(this->instance, this->style->width(), this->style->height());
+			std::lock_guard<std::recursive_mutex> g(this->Element::m);
+
+			return this;
+		};
+
 
 		void Window::removeSelf() {
-			this->removeAll();
-			delete this;
+			this->ElementContainer::removeSelf();
 		}
 		Window::~Window() {
+			delete this->coordMap;
+			WindowWaiter::saveContext();
 			//delete this->sysWindow;
 		}
 	}

@@ -1,22 +1,21 @@
 #pragma once
-#ifndef __ELEMENTS_CONTAINER
-
-#define __ELEMENTS_CONTAINER
-
 #include "../common.h"
 #include <vector>
 #include "../Elements/Element.h"
 #include <unordered_set>
+#include <mutex>
 
 namespace GUI {
 	class Container
 	{
 	public:
+		std::recursive_mutex m;
 		//base type info =========================
 		static const std::type_info* __base_type;
 		virtual const std::type_info* __current_type();
 
 		//data =========================
+
 		std::unordered_set<Elements::Element*> elements;
 
 		//constructor =========================
@@ -31,5 +30,3 @@ namespace GUI {
 		virtual ~Container();
 	};
 }
-
-#endif

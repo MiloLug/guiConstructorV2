@@ -1,6 +1,7 @@
 #include "ClassName.h"
 #include "../../Elements/Element.h"
 #include "../Event/Emitter.h"
+#include "../Style/StyleSetElement.h"
 
 namespace GUI {
 	namespace ClassName {

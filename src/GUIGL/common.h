@@ -1,8 +1,9 @@
 #pragma once
 #include <functional>
 #include <string>
-
+#include <mutex>
 namespace GUI {
+	extern std::mutex syncMain;
 	typedef unsigned long long elemIdNum_t;
 	class HashId {
 	public:

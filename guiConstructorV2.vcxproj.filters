@@ -18,6 +18,12 @@
     <ClCompile Include="src\GUIGL\Components\Event\ThreadLoops.cpp" />
     <ClCompile Include="src\GUIGL\Components\ClassName\ClassName.cpp" />
     <ClCompile Include="src\GUIGL\Components\EventCollection\classNameChange.cpp" />
+    <ClCompile Include="src\GUIGL\guigl.cpp" />
+    <ClCompile Include="src\GUIGL\Components\EventCollection\mouseMove.cpp" />
+    <ClCompile Include="src\GUIGL\Components\WindowWaiter.cpp" />
+    <ClCompile Include="src\GUIGL\Components\EventCollection\mouseDown.cpp" />
+    <ClCompile Include="src\GUIGL\Components\EventCollection\mouseUp.cpp" />
+    <ClCompile Include="src\GUIGL\Components\CoordMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GUIGL\Elements\Element.h" />
@@ -38,6 +44,14 @@
     <ClInclude Include="src\GUIGL\Components\Event\ThreadLoops.h" />
     <ClInclude Include="src\GUIGL\Components\ClassName\ClassName.h" />
     <ClInclude Include="src\GUIGL\Components\EventCollection\classNameChange.h" />
+    <ClInclude Include="src\GUIGL\guigl.h" />
+    <ClInclude Include="src\GUIGL\Components\EventCollection\mouseMove.h" />
+    <ClInclude Include="src\GUIGL\Components\WindowWaiter.h" />
+    <ClInclude Include="src\GUIGL\Components\EventCollection\mouseEvent.h" />
+    <ClInclude Include="src\GUIGL\Components\EventCollection\mouseDown.h" />
+    <ClInclude Include="src\GUIGL\Components\EventCollection\mouseUp.h" />
+    <ClInclude Include="src\GUIGL\Components\CoordMap.h" />
+    <ClInclude Include="src\GUIGL\Components\xxhash.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\GUIGL\common.h" />

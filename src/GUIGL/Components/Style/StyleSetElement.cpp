@@ -26,6 +26,7 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_width = t;
 			this->_widthSet = true;
+			this->el->__updateWidth();
 			return this;
 		};
 
@@ -37,6 +38,7 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_height = t;
 			this->_heightSet = true;
+			this->el->__updateHeight();
 			return this;
 		};
 
@@ -60,6 +62,7 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_left = t;
 			this->_leftSet = true;
+			this->el->__updateLeft();
 			return this;
 		};
 
@@ -83,6 +86,7 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_top = t;
 			this->_topSet = true;
+			this->el->__updateTop();
 			return this;
 		};
 
@@ -106,6 +110,7 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_zIndex = t;
 			this->_zIndexSet = true;
+			this->el->__updateZ();
 			return this;
 		};
 
@@ -117,6 +122,8 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_position = t;
 			this->_positionSet = true;
+
+			this->el->__updatePos();
 			return this;
 		};
 
@@ -135,18 +142,21 @@ namespace GUI {
 				this->base = StylesStorage::aspectMixer(begin, end, size);
 			else
 				StylesStorage::rebuildAspectMixer((StyleSetAspectMixer*)this->base, begin, end, size);
+			this->el->__updatePos();
 			return this;
 		}
 
 		inline StyleSetElement* StyleSetElement::hover(bool state) {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->stateMap[Style::States::hover] = state;
+			this->el->__updatePos();
 			return this;
 		};
 
 		inline StyleSetElement* StyleSetElement::press(bool state) {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->stateMap[Style::States::press] = state;
+			this->el->__updatePos();
 			return this;
 		};
 	}

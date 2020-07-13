@@ -13,10 +13,13 @@ namespace GUI {
 
 		//data =========================
 		inline Window* ElementContainer::parentWindow() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
 			return this->_parentWindow;
 		}
+
 		inline Element* ElementContainer::parentWindow(Window* w) {
-			this->_parentWindow = w;
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			this->Element::parentWindow(w);
 			std::unordered_set<Element*>::iterator iter = this->elements.begin(),
 				end = this->elements.end();
 			for (; (iter != end); iter++) {
@@ -24,23 +27,49 @@ namespace GUI {
 			}
 			return this;
 		}
+
+		inline Element* ElementContainer::parentWindowForceMove(Window* w) {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+
+			if (w != this->_parentWindow){
+				this->parentWindow(w);
+			}
+			else if(w != nullptr){
+				this->__updatePos();
+			}
+
+			return this;
+		}
+
+		inline Element* ElementContainer::parent() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			return this->_parent;
+		}
+
+		inline Element* ElementContainer::parent(Element* el) {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			this->Element::parent(el);
+			return this;
+		}
+
 		//constructor =========================
 		ElementContainer::ElementContainer() : Element(), Container() {}
 
 		//some methods =========================
 		ElementContainer* ElementContainer::addElement(Element* elem) {
+			std::scoped_lock l(this->Element::m, this->Container::m);
 			if (elem->parent() != nullptr) {
 				if (elem->parent() == this)
 					return this;
 				((ElementContainer*)elem->parent())->unlinkElement(elem);
 			}
 			elem->parent(this)
-				->parentWindow(this->parentWindow())
 				->__linkContainer(this);
 			this->elements.insert(elem);
 			return this;
 		};
 		ElementContainer* ElementContainer::removeElement(Element* elem) {
+			std::scoped_lock l(this->Element::m, this->Container::m);
 			if (elem->parent() == this) {
 				elem->removeSelf();
 			}
@@ -52,9 +81,9 @@ namespace GUI {
 		};
 
 		ElementContainer* ElementContainer::unlinkElement(Element* elem) {
+			std::scoped_lock l(this->Element::m, this->Container::m);
 			if (elem->parent() == this) {
 				elem->parent(nullptr)
-					->parentWindow(nullptr)
 					->__unlinkContainer(this);
 				this->elements.erase(elem);
 			}
@@ -62,24 +91,24 @@ namespace GUI {
 		};
 
 		ElementContainer* ElementContainer::unlinkAll() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
 			std::unordered_set<Element*>::iterator iter = this->elements.begin(),
 				end = this->elements.end();
 			for (; (iter != end); iter++) {
 				(*iter)->parent(nullptr)
-					->parentWindow(nullptr)
 					->__unlinkContainer(this);
 			}
 			this->elements.clear();
 			return this;
 		};
 		ElementContainer* ElementContainer::removeAll() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
 			std::unordered_set<Element*>::iterator iter = this->elements.begin();
 			Element* tmp;
 			while (iter != this->elements.end()) {
 				tmp = *iter;
 				iter = this->elements.erase(iter);
-				tmp->parent(nullptr)
-					->parentWindow(nullptr);
+				tmp->parent(nullptr);
 				if (tmp->__containersCount() == 0)
 					tmp->removeSelf();
 				else
@@ -89,6 +118,60 @@ namespace GUI {
 		};
 
 		void ElementContainer::__drawBase(int wwidth, int wheight) {}
+
+
+		inline Element* ElementContainer::__updateLeft() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->Element::__updateLeft();
+			std::unordered_set<Element*>::iterator iter = this->elements.begin(),
+				end = this->elements.end();
+			for (; (iter != end); iter++) {
+				(*iter)->__updateLeft();
+			}
+			return this;
+		}
+
+		inline Element* ElementContainer::__updateTop() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->Element::__updateTop();
+			std::unordered_set<Element*>::iterator iter = this->elements.begin(),
+				end = this->elements.end();
+			for (; (iter != end); iter++) {
+				(*iter)->__updateTop();
+			}
+			return this;
+		}
+
+		inline Element* ElementContainer::__updateZ() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->Element::__updateZ();
+			std::unordered_set<Element*>::iterator iter = this->elements.begin(),
+				end = this->elements.end();
+			for (; (iter != end); iter++) {
+				(*iter)->__updateZ();
+			}
+			return this;
+		}
+
+		inline Element* ElementContainer::__updatePos() {
+			std::scoped_lock l(this->Element::m, this->Container::m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->Element::__updatePos();
+			std::unordered_set<Element*>::iterator iter = this->elements.begin(),
+				end = this->elements.end();
+			for (; (iter != end); iter++) {
+				(*iter)->__updatePos();
+			}
+			return this;
+		};
+
 
 		void ElementContainer::removeSelf() {
 			this->removeAll()

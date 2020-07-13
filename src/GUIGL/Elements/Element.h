@@ -1,24 +1,27 @@
 #pragma once
-#ifndef __ELEMENTS_ELEMENT
-
-#define __ELEMENTS_ELEMENT
-
 #include "../common.h"
 #include <functional>
 #include <string>
 #include "../Components/Event/Emitter.h"
-#include "../Components/Style/StyleSetElement.h"
 #include <unordered_set>
+#include <mutex>
+#include "../Components/CoordMap.h"
+#include "../Components/Style/StyleSetElement.h"
 #include "../Components/ClassName/ClassName.h"
 
 namespace GUI {
 	class Container;
+	namespace Event {
+		class DataPack;
+	}
 	namespace Elements {
 		class Window;
 
 		class Element : public Event::Emitter
 		{
 		public:
+			std::recursive_mutex m;
+
 			//base type info =========================
 			static const std::type_info* __base_type;
 			virtual const std::type_info* __current_type();
@@ -27,7 +30,7 @@ namespace GUI {
 			bool _shown = true;
 			std::string _title = "";
 
-			std::string& title(); //get
+			std::string title(); //get
 			Element* title(const std::string& title); //set
 
 			ClassName::NameContainer* className;
@@ -38,10 +41,12 @@ namespace GUI {
 			std::unordered_set<Container*> containers;
 			Window* _parentWindow = nullptr;
 			Element* _parent = nullptr;
+			CoordPath _coordPath;
 
 			inline virtual Window* parentWindow();
 			inline virtual Element* parent();
 			inline virtual Element* parentWindow(Window* w);
+			inline virtual Element* parentWindowForceMove(Window* w);
 			inline virtual Element* parent(Element* el);
 
 			Style::StyleSetElement *style;
@@ -86,10 +91,22 @@ namespace GUI {
 			inline virtual Element* __unlinkContainer(Container* cont);
 			inline virtual size_t __containersCount();
 
+			inline virtual Element* __updateHeight();
+
+			inline virtual Element* __updateWidth();
+
+			inline virtual Element* __updateLeft();
+
+			inline virtual Element* __updateTop();
+
+			inline virtual Element* __updateZ();
+
+			inline virtual Element* __updatePos();
+
+			inline virtual Element* emit(HashId id, Event::DataPack* data = nullptr);
+
 			virtual void removeSelf();
 			virtual ~Element();
 		};
 	}
 }
-
-#endif

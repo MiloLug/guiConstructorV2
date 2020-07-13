@@ -33,12 +33,15 @@ namespace GUI {
 
 			Emitter* off(HashId id, const defaultListenerFn_t& fn);
 
-			Emitter* emit(HashId id, DataPack* data = nullptr);
+			virtual Emitter* emit(HashId id, DataPack* data = nullptr);
 			virtual ~Emitter();
 		};
 		extern Emitter root;
-		inline void init(size_t maxThreadsNumber = 2) {
+		inline void init(size_t maxThreadsNumber) {
 			ThreadLoops::init(maxThreadsNumber);
+		};
+		inline void init() {
+			ThreadLoops::init();
 		};
 		inline void wait() {
 			ThreadLoops::wait();

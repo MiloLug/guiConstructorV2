@@ -15,18 +15,21 @@ namespace GUI {
 
 	//some methods =========================
 	Container* Container::linkElement(Elements::Element* elem) {
+		std::lock_guard<std::recursive_mutex> guard(this->m);
 		elem->__linkContainer(this);
 		this->elements.insert(elem);
 		return this;
 	}
 
 	Container* Container::unlinkElement(Elements::Element* elem) {
+		std::lock_guard<std::recursive_mutex> guard(this->m);
 		this->elements.erase(elem);
 		elem->__unlinkContainer(this);
 		return this;
 	}
 
 	Container* Container::unlinkAll() {
+		std::lock_guard<std::recursive_mutex> guard(this->m);
 		std::unordered_set<Elements::Element*>::iterator iter = this->elements.begin(),
 			end = this->elements.end();
 		for (; (iter != end); iter++) {

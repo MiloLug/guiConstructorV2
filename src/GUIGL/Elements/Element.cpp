@@ -1,10 +1,6 @@
 #include "Element.h"
-//#include "../Event.h"
 #include "../common.h"
-//#include "../Draw.h"
 #include "Window.h"
-//#include "ElementsStore.h"
-//#include "Components/Style.h"
 #include "../Components/Container.h"
 
 namespace GUI {
@@ -15,10 +11,12 @@ namespace GUI {
 			return &typeid(Element);
 		}
 		//attributes =========================
-		std::string& Element::title() {
+		std::string Element::title() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
 			return this->_title;
 		};
 		Element* Element::title(const std::string& title) {
+			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_title = title;
 			//this->windowRedraw(); //?
 			return this;
@@ -26,30 +24,50 @@ namespace GUI {
 
 		//data =========================
 		inline Window* Element::parentWindow() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
 			return this->_parentWindow;
 		}
 		inline Element* Element::parent() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
 			return this->_parent;
 		}
 		inline Element* Element::parentWindow(Window* w) {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+
 			if (w != this->_parentWindow) {
 				if (this->_parentWindow != nullptr)
-					this->_parentWindow->removeFromCoordList(0, 0, 0, 0, 0, this);
+					this->_parentWindow->coordMap->remove(&this->_coordPath);
 
 				this->_parentWindow = w;
-				if (w != nullptr)
-					w->addToCoordList(0, 0, 0, 0, 0, this);
+				if (w != nullptr) {
+					this->_coordPath = w->coordMap->add(this->style->zIndex(), this->style->left(), this->style->top(), this->style->width(), this->style->height(), this);
+				}
+			}
+			return this;
+		}
+		inline Element* Element::parentWindowForceMove(Window* w) {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			if (w != this->_parentWindow || w == nullptr) {
+				if (this->_parentWindow != nullptr)
+					this->_parentWindow->coordMap->remove(&this->_coordPath);
+
+				this->_parentWindow = w;
+				if (w != nullptr) {
+					this->_coordPath = w->coordMap->add(this->style->zIndex(), this->style->left(), this->style->top(), this->style->width(), this->style->height(), this);
+				}
+			}
+			else {
+				this->__updatePos();
 			}
 			return this;
 		}
 		inline Element* Element::parent(Element* el) {
-			if (el != this->_parent) {
-				if (this->_parent != nullptr && this->_parent->parentWindow() != nullptr)
-					this->_parent->parentWindow()->removeFromCoordList(0, 0, 0, 0, 0, this);
+			std::lock_guard<std::recursive_mutex> g(this->m);
 
+			if (el != this->_parent && el != this) {
 				this->_parent = el;
-				if (el != nullptr && el->parentWindow() != nullptr)
-					el->parentWindow()->addToCoordList(0, 0, 0, 0, 0, this);
+				Window* w = el != nullptr ? el->parentWindow() : nullptr;
+				this->parentWindowForceMove(w);
 			}
 			return this;
 		}
@@ -83,75 +101,6 @@ namespace GUI {
 			return this;
 		}
 
-		/*Element* Element::emit(const elemId_t& eventId, Event::baseEvent* e) {
-			Event::emit(this->parentWindow, this->id, eventId, e);
-			return this;
-		};
-		Element* Element::emit(const elemId_t& eventId, void* e) {
-			Event::emit(this->parentWindow, this->id, eventId, e);
-			return this;
-		};
-
-		Element* Element::on(const elemId_t& eventId, const Event::defaultELFn& fn, void* additionData, Event::defaultELFn*& listenerPtr) {
-			Event::on(this->parentWindow, this->id, eventId, fn, additionData, listenerPtr);
-			return this;
-		};
-		Element* Element::on(const elemId_t& eventId, const Event::defaultELFn& fn, void* additionData) {
-			Event::on(this->parentWindow, this->id, eventId, fn, additionData);
-			return this;
-		};
-		Element* Element::on(const elemId_t& eventId, const Event::defaultELFn& fn, Event::defaultELFn*& listenerPtr) {
-			Event::on(this->parentWindow, this->id, eventId, fn, listenerPtr);
-			return this;
-		};
-		Element* Element::on(const elemId_t& eventId, const Event::defaultELFn& fn) {
-			Event::on(this->parentWindow, this->id, eventId, fn);
-			return this;
-		};
-
-		Element* Element::off(const elemId_t& eventId, const Event::defaultELFn& fn) {
-			Event::off(this->parentWindow, this->id, eventId, fn);
-			return this;
-		};
-		Element* Element::off(const elemId_t& eventId, Event::defaultELFn* fn) {
-			Event::off(this->parentWindow, this->id, eventId, fn);
-			return this;
-		};
-
-		Element* Element::emit(const std::string& eventId, Event::baseEvent* e) {
-			Event::emit(this->parentWindow, this->id, strHash(eventId.data()), e);
-			return this;
-		};
-		Element* Element::emit(const std::string& eventId, void* e) {
-			Event::emit(this->parentWindow, this->id, strHash(eventId.data()), e);
-			return this;
-		};
-
-		Element* Element::on(const std::string& eventId, const Event::defaultELFn& fn, void* additionData, Event::defaultELFn*& listenerPtr) {
-			Event::on(this->parentWindow, this->id, strHash(eventId.data()), fn, additionData, listenerPtr);
-			return this;
-		};
-		Element* Element::on(const std::string& eventId, const Event::defaultELFn& fn, void* additionData) {
-			Event::on(this->parentWindow, this->id, strHash(eventId.data()), fn, additionData);
-			return this;
-		};
-		Element* Element::on(const std::string& eventId, const Event::defaultELFn& fn, Event::defaultELFn*& listenerPtr) {
-			Event::on(this->parentWindow, this->id, strHash(eventId.data()), fn, listenerPtr);
-			return this;
-		};
-		Element* Element::on(const std::string& eventId, const Event::defaultELFn& fn) {
-			Event::on(this->parentWindow, this->id, strHash(eventId.data()), fn);
-			return this;
-		};
-
-		Element* Element::off(const std::string& eventId, const Event::defaultELFn& fn) {
-			Event::off(this->parentWindow, this->id, strHash(eventId.data()), fn);
-			return this;
-		};
-		Element* Element::off(const std::string& eventId, Event::defaultELFn* fn) {
-			Event::off(this->parentWindow, this->id, strHash(eventId.data()), fn);
-			return this;
-		};*/
 
 		inline Element* Element::__linkContainer(Container* cont) {
 			this->containers.insert(cont);
@@ -164,8 +113,84 @@ namespace GUI {
 		inline size_t Element::__containersCount() {
 			return this->containers.size();
 		};
+		
+
+		inline Element* Element::__updateHeight() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->parentWindow()->coordMap->move(
+				&this->_coordPath,
+				this->_coordPath.zPos, this->_coordPath.xPos, this->_coordPath.yPos, this->_coordPath.wPos, this->style->height()
+			);
+			return this;
+		}
+
+		inline Element* Element::__updateWidth() {
+		std::lock_guard<std::recursive_mutex> g(this->m);
+		if (this->parentWindow() == nullptr)
+			return this;
+		this->parentWindow()->coordMap->move(
+			&this->_coordPath,
+			this->_coordPath.zPos, this->_coordPath.xPos, this->_coordPath.yPos, this->style->width(), this->_coordPath.hPos
+		);
+		return this;
+		}
+
+		inline Element* Element::__updateLeft() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->parentWindow()->coordMap->move(
+				&this->_coordPath,
+				this->_coordPath.zPos, this->style->left(), this->_coordPath.yPos, this->_coordPath.wPos, this->_coordPath.hPos
+			);
+			return this;
+		}
+
+		inline Element* Element::__updateTop() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->parentWindow()->coordMap->move(
+				&this->_coordPath,
+				this->_coordPath.zPos, this->_coordPath.xPos, this->style->top(), this->_coordPath.wPos, this->_coordPath.hPos
+			);
+			return this;
+		}
+
+		inline Element* Element::__updateZ() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->parentWindow()->coordMap->move(
+				&this->_coordPath,
+				this->style->zIndex(), this->_coordPath.xPos, this->_coordPath.yPos, this->_coordPath.wPos, this->_coordPath.hPos
+			);
+			return this;
+		}
+
+		inline Element* Element::__updatePos() {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			if (this->parentWindow() == nullptr)
+				return this;
+			this->parentWindow()->coordMap->move(
+				&this->_coordPath,
+				this->style->zIndex(), this->style->left(), this->style->top(), this->style->width(), this->style->height()
+			);
+			return this;
+		};
+
+		inline Element* Element::emit(HashId id, Event::DataPack* data) {
+			this->Emitter::emit(id, data);
+			if (this->parent() != nullptr) {
+				this->parent()->emit(id, data->copy());
+			}
+			return this;
+		};
 
 		void Element::removeSelf() {
+			this->m.lock();
 			std::unordered_set<Container*>::iterator iter = this->containers.begin();
 			Container* tmp;
 			while (iter != this->containers.end()) {
@@ -175,7 +200,7 @@ namespace GUI {
 			}
 			delete this->style;
 			delete this->className;
-
+			this->m.unlock();
 			delete this;
 		}
 		Element::~Element() {

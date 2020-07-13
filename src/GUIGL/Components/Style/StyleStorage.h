@@ -35,6 +35,8 @@ namespace GUI {
 			static StyleSetAspectMixer* aspectMixer(const HashId* begin, const HashId* end, const int size);
 
 			static StyleSetAspectMixer* rebuildAspectMixer(StyleSetAspectMixer* mixer, const HashId* begin, const HashId* end, const int size);
+
+			static void terminate();
 		};
 	}
 }
