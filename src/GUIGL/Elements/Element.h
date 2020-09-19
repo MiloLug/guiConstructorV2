@@ -103,7 +103,7 @@ namespace GUI {
 
 			inline virtual Element* __updatePos();
 
-			inline virtual Element* emit(HashId id, Event::DataPack* data = nullptr);
+			inline virtual Element* emit(HashId id, Event::DataPack* data = nullptr, bool propagation = true);
 
 			virtual void removeSelf();
 			virtual ~Element();

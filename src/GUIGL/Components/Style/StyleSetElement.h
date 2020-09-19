@@ -44,8 +44,8 @@ namespace GUI {
 
 			StyleSetElement* mixAspects(const HashId* begin, const HashId* end, const int size);
 
-			inline StyleSetElement* hover(bool state);
-			inline StyleSetElement* press(bool state);
+			StyleSetElement* hover(bool state);
+			StyleSetElement* press(bool state);
 		};
 	}
 }

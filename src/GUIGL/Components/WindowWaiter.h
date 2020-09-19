@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_set>
 #include <mutex>
+#include <functional>
 
 namespace GUI {
 	namespace Elements {
@@ -15,6 +16,8 @@ namespace GUI {
 		static void addWindow(Elements::Window* w);
 		static bool empty();
 		static void saveContext();
+		
+		static void iterateContexts(std::function<void(Elements::Window*)>);
 
 		static void init();
 		static void terminate();

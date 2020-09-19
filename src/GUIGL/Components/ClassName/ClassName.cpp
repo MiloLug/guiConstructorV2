@@ -19,7 +19,8 @@ namespace GUI {
 			this->el->style->mixAspects(&this->names[0], &this->names[0]+this->names.size(), this->names.size());
 			this->el->emit(
 				Event::EventCollection::classNameChange::eventId,
-				new Event::EventCollection::classNameChange(this->names)
+				new Event::EventCollection::classNameChange(this->el, this->names),
+				false
 			);
 			this->m.unlock();
 			//ClassNamesStorage::addPair(name, this->el);

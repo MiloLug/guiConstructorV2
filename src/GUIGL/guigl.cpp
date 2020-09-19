@@ -3,10 +3,12 @@
 #include <stdexcept>
 #include "Components/WindowWaiter.h"
 #include "Components/Event/Emitter.h"
+#include "Elements/Window.h"
 #include "Components/Style/StyleStorage.h"
 #include <GLFW/glfw3.h>
 #include <thread>
 #include <chrono>
+
 namespace GUI {
 	//bool glfwInitialized = false;
 
@@ -30,11 +32,12 @@ namespace GUI {
 	//}
 
 	void terminate(bool dontWaitEventFunctions) {
-		while (!WindowWaiter::empty()) {
-			//DRAW
-			//std::cout << "1" ;
-			
+		while (!WindowWaiter::empty()) {			
+			WindowWaiter::iterateContexts([](Elements::Window* window) {
+				window->swapBuffers();
+			});
 			glfwPollEvents();
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 		WindowWaiter::terminate();
 		Event::terminate(dontWaitEventFunctions);

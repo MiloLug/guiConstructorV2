@@ -52,6 +52,7 @@
     <ClInclude Include="src\GUIGL\Components\EventCollection\mouseUp.h" />
     <ClInclude Include="src\GUIGL\Components\CoordMap.h" />
     <ClInclude Include="src\GUIGL\Components\xxhash.hpp" />
+    <ClInclude Include="src\GUIGL\Components\EventCollection\eventElement.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\GUIGL\common.h" />

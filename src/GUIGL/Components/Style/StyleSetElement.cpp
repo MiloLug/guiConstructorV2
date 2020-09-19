@@ -22,6 +22,7 @@ namespace GUI {
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			return this->_widthSet || this->base == nullptr ? this->_width : this->base->width(this->stateMap);
 		};
+
 		StyleSetElement* StyleSetElement::width(int t) { //set
 			std::lock_guard<std::recursive_mutex> g(this->m);
 			this->_width = t;
@@ -146,16 +147,16 @@ namespace GUI {
 			return this;
 		}
 
-		inline StyleSetElement* StyleSetElement::hover(bool state) {
+		StyleSetElement* StyleSetElement::hover(bool state) {
 			std::lock_guard<std::recursive_mutex> g(this->m);
-			this->stateMap[Style::States::hover] = state;
+			this->stateMap[Style::States::hover-1] = state;
 			this->el->__updatePos();
 			return this;
 		};
 
-		inline StyleSetElement* StyleSetElement::press(bool state) {
+		StyleSetElement* StyleSetElement::press(bool state) {
 			std::lock_guard<std::recursive_mutex> g(this->m);
-			this->stateMap[Style::States::press] = state;
+			this->stateMap[Style::States::press-1] = state;
 			this->el->__updatePos();
 			return this;
 		};

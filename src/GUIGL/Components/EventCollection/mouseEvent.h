@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Event/DataPack.h"
+#include "eventElement.h"
 #include "../../common.h"
 #include <GLFW/glfw3.h>
 
@@ -12,20 +12,20 @@ namespace GUI {
 				middle = GLFW_MOUSE_BUTTON_MIDDLE,
 				right = GLFW_MOUSE_BUTTON_RIGHT
 			};
-			class mouseEvent : public DataPack {
+			class mouseEvent : public eventElement {
 			public:
 				int x;
 				int y;
 				MouseButtons button;
 
-				mouseEvent(int x, int y, MouseButtons btn) {
+				mouseEvent(Elements::Element* topElement, int x, int y, MouseButtons btn) : eventElement(topElement) {
 					this->x = x;
 					this->y = y;
 					this->button = btn;
 				}
 				mouseEvent() {}
 				virtual mouseEvent* copy() {
-					mouseEvent* t = new mouseEvent(this->x, this->y, this->button);
+					mouseEvent* t = new mouseEvent(this->topElement, this->x, this->y, this->button);
 					return t;
 				}
 				virtual ~mouseEvent() {}

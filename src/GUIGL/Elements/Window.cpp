@@ -201,10 +201,14 @@ namespace GUI {
 		void Window::cursorPosCallbackFn(GLFWwindow* window, double xpos, double ypos) {
 			Window* _this = (Window*)glfwGetWindowUserPointer(window);
 			Element* top = _this->coordMap->find(xpos, ypos);
-			(top == nullptr ? _this : top)->emit(
+			if (top == nullptr) top = _this;
+
+			top->emit(
 				Event::EventCollection::mouseMove::eventId,
-				new Event::EventCollection::mouseMove(xpos, ypos)
+				new Event::EventCollection::mouseMove(top, xpos, ypos)
 			);
+
+			
 		}
 		void Window::closeCallbackFn(GLFWwindow* window) {
 			Window* _this = (Window*)glfwGetWindowUserPointer(window);
@@ -233,16 +237,17 @@ namespace GUI {
 			glfwGetCursorPos(window, &xpos, &ypos);
 
 			Element* top = _this->coordMap->find(xpos, ypos);
+			if (top == nullptr) top = _this;
 
 			if (action == GLFW_PRESS)
-				(top == nullptr ? _this : top)->emit(
+				top->emit(
 					Event::EventCollection::mouseDown::eventId,
-					new Event::EventCollection::mouseDown(xpos, ypos, (Event::EventCollection::MouseButtons)button)
+					new Event::EventCollection::mouseDown(top, xpos, ypos, (Event::EventCollection::MouseButtons)button)
 				);
 			else
-				(top == nullptr ? _this : top)->emit(
+				top->emit(
 					Event::EventCollection::mouseUp::eventId,
-					new Event::EventCollection::mouseUp(xpos, ypos, (Event::EventCollection::MouseButtons)button)
+					new Event::EventCollection::mouseUp(top, xpos, ypos, (Event::EventCollection::MouseButtons)button)
 				);
 		}
 

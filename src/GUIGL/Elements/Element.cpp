@@ -181,11 +181,13 @@ namespace GUI {
 			return this;
 		};
 
-		inline Element* Element::emit(HashId id, Event::DataPack* data) {
-			this->Emitter::emit(id, data);
-			if (this->parent() != nullptr) {
+		inline Element* Element::emit(HashId id, Event::DataPack* data, bool propagation) {
+			std::lock_guard<std::recursive_mutex> g(this->m);
+			this->Emitter::emit(id, data->copy());
+			if (propagation && this->parent() != nullptr) {
 				this->parent()->emit(id, data->copy());
 			}
+			delete data;
 			return this;
 		};
 

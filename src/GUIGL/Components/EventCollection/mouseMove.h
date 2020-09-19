@@ -8,10 +8,10 @@ namespace GUI {
 			public:
 				static elemIdNum_t eventId;
 
-				mouseMove(int x, int y) : mouseEvent(x, y, MouseButtons::left) {}
+				mouseMove(Elements::Element* topElement, int x, int y) : mouseEvent(topElement, x, y, MouseButtons::left) {}
 				mouseMove() {}
 				virtual mouseMove* copy() {
-					mouseMove* t = new mouseMove(this->x, this->y);
+					mouseMove* t = new mouseMove(this->topElement, this->x, this->y);
 					return t;
 				}
 				virtual ~mouseMove() {}
